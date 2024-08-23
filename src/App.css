@@ -36,6 +36,20 @@ body {
   transform: scale(1.1);
 }
 
+.col img {
+  width: 80%;
+  height: auto;
+  object-fit: cover;
+  border: 2px solid red;
+  border-radius: 8px;
+  transition: transform 0.2s;
+  cursor: pointer;
+}
+
+.col img:hover {
+  transform: scale(1.1);
+}
+
 .card {
   width: 85%;
   transition: transform 0.3s;
@@ -46,6 +60,7 @@ body {
 }
 .card:hover {
   transform: scale(1.1);
+  cursor: pointer;
 }
 
 .card img {
