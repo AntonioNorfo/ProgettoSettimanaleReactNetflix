@@ -12,12 +12,38 @@ body {
   background-color: #221f1f !important;
 }
 
-.card {
-  width: 100%;
-  margin: 5px;
-  transition: transform 0.2s;
+.navbar a,
+.navbar i,
+#kids,
+.footer-links a,
+.footer-button,
+.dropdown-item,
+.icons,
+.footer-icon {
+  cursor: pointer;
+  transition: transform 0.3s;
 }
 
+.navbar a:hover,
+.navbar i:hover,
+#kids:hover,
+.footer-links a:hover,
+.footer-button:hover,
+.dropdown-item:hover,
+.icons:hover,
+.footer-icon:hover {
+  color: red !important;
+  transform: scale(1.1);
+}
+
+.card {
+  width: 85%;
+  transition: transform 0.3s;
+  cursor: pointer !important;
+  border-color: red;
+  border-radius: 8px;
+  overflow: hidden;
+}
 .card:hover {
   transform: scale(1.1);
 }
@@ -26,19 +52,25 @@ body {
   width: 100%;
   height: auto;
   object-fit: cover;
-}
-
-.card-body {
-  display: none;
+  cursor: pointer !important;
 }
 
 .carousel-control-prev,
 .carousel-control-next {
-  width: 5%; /* Riduci la larghezza delle frecce */
+  width: 5%;
+  z-index: 1;
 }
 
-.carousel-control-prev-icon,
-.carousel-control-next-icon {
-  background-color: rgba(0, 0, 0, 0.5);
-  border-radius: 50%;
+.carousel-control-prev {
+  left: -60px;
+}
+
+.carousel-control-next {
+  right: -60px;
+}
+.custom-carousel .carousel-indicators {
+  position: absolute;
+  bottom: -30px;
+  left: 50%;
+  transform: translateX(-50%);
 }

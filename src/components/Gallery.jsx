@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Carousel from "react-bootstrap/Carousel";
+import Alert from "react-bootstrap/Alert";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../App.css";
 
@@ -36,8 +37,13 @@ class Gallery extends Component {
     const { title } = this.props;
     const { movies, loading, error } = this.state;
 
-    if (loading) return <div>Loading...</div>;
-    if (error) return <div>Error: {error}</div>;
+    if (loading) {
+      return <div>Loading...</div>;
+    }
+
+    if (error) {
+      return <div>Error: {error}</div>;
+    }
 
     const chunkedMovies = [];
     for (let i = 0; i < movies.length; i += 6) {
@@ -47,15 +53,13 @@ class Gallery extends Component {
     return (
       <div className="gallery">
         <h2>{title}</h2>
-        <Carousel controls={true} indicators={false} interval={null}>
+        <Carousel className="custom-carousel" interval={null} indicators={true}>
           {chunkedMovies.map((movieChunk, index) => (
             <Carousel.Item key={index}>
-              <div className="row">
+              <div className="d-flex">
                 {movieChunk.map((movie) => (
-                  <div className="col-md-2" key={movie.imdbID}>
-                    <div className="card">
-                      <img src={movie.Poster} className="card-img-top" alt={movie.Title} />
-                    </div>
+                  <div key={movie.imdbID} className="col">
+                    <img src={movie.Poster} alt={movie.Title} />
                   </div>
                 ))}
               </div>
