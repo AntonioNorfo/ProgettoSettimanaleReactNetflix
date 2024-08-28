@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
-import Carousel from "react-bootstrap/Carousel";
 import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../App.css";
 
-const Gallery = ({ title, query }) => {
+const LimitedGallery = ({ title, query, limit }) => {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -15,7 +14,7 @@ const Gallery = ({ title, query }) => {
         const response = await fetch(`http://www.omdbapi.com/?apikey=7cd45db2&s=${query}`);
         const data = await response.json();
         if (data.Response === "True") {
-          setMovies(data.Search);
+          setMovies(data.Search.slice(0, limit));
         } else {
           setError(data.Error);
         }
@@ -26,7 +25,7 @@ const Gallery = ({ title, query }) => {
     };
 
     fetchMovies();
-  }, [query]);
+  }, [query, limit]);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -36,31 +35,20 @@ const Gallery = ({ title, query }) => {
     return <div>Error: {error}</div>;
   }
 
-  const chunkedMovies = [];
-  for (let i = 0; i < movies.length; i += 6) {
-    chunkedMovies.push(movies.slice(i, i + 6));
-  }
-
   return (
     <div className="gallery">
-      <h2>{title}</h2>
-      <Carousel className="custom-carousel" interval={null} indicators={true}>
-        {chunkedMovies.map((movieChunk, index) => (
-          <Carousel.Item key={index}>
-            <div className="d-flex">
-              {movieChunk.map((movie) => (
-                <div key={movie.imdbID} className="col">
-                  <Link to={`/movie-details/${movie.imdbID}`}>
-                    <img src={movie.Poster} alt={movie.Title} />
-                  </Link>
-                </div>
-              ))}
-            </div>
-          </Carousel.Item>
+      <h2 className="text-center my-5 text-danger">{title}</h2>
+      <div className="d-flex justify-content-center">
+        {movies.map((movie) => (
+          <div key={movie.imdbID} className="col-2 mx-5 border border-2 border-danger">
+            <Link to={`/movie-details/${movie.imdbID}`}>
+              <img src={movie.Poster} alt={movie.Title} className="img-fluid" />
+            </Link>
+          </div>
         ))}
-      </Carousel>
+      </div>
     </div>
   );
 };
 
-export default Gallery;
+export default LimitedGallery;
